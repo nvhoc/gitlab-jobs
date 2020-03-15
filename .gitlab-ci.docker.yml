@@ -1,0 +1,26 @@
+docker-build:
+  stage: build
+  image: docker:19.03
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+  - docker:19.03.1-dind
+  before_script:
+    - source .variables
+    - docker info
+    - docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
+    - IMAGE=$DOCKER_REPO/$CI_PROJECT_PATH_SLUG:$TAG
+  script:
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
+    - echo "export COHBOT_DEPLOY_IMAGE=$IMAGE" >> .variables
+    - cat .variables
+  artifacts:
+    paths:
+    - .variables
+  only:
+    - master
+
+
+

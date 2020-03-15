@@ -1,0 +1,29 @@
+git-tag:
+  stage: tag
+  image: cohbot/gitlab-runner-tag
+  before_script: 
+    - pwd
+    - which ssh-agent || ( apk add openssh-client --no-cache)
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git config --global user.email "cohbot@coh.dev"
+    - git config --global user.name "coh bot"
+    - git remote set-url --push origin $(echo $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')
+    - go get github.com/nvhoc/git-autotag
+  script:
+    - git fetch --tags
+    - TAG=$(echo $(git autotag))
+    - git push origin $TAG
+    - echo "export TAG=$TAG" >> .variables
+    - cat .variables
+  artifacts:
+    paths:
+    - .variables
+  only:
+    - master
+
+
+
