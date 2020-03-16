@@ -9,8 +9,8 @@ git-tag:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - git config --global user.email "cohbot@coh.dev"
-    - git config --global user.name "coh bot"
+    - git config --global user.email "$GITHUB_EMAIL"
+    - git config --global user.name "$GITHUB_USER"
     - git remote set-url --push origin $(echo $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')
     - go get github.com/nvhoc/git-autotag
   script:

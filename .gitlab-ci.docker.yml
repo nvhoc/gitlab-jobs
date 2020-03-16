@@ -14,7 +14,7 @@ docker-build:
   script:
     - docker build -t $IMAGE .
     - docker push $IMAGE
-    - echo "export COHBOT_DEPLOY_IMAGE=$IMAGE" >> .variables
+    - echo "export IMAGE=$IMAGE" >> .variables
     - cat .variables
   artifacts:
     paths:

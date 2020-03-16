@@ -19,8 +19,26 @@ stages:
   - deploy
   
 include:
-  - remote: https://raw.githubusercontent.com/nvhoc/gitlab-jobs/master/.gitlab-ci.tag.yml
-  - remote: https://raw.githubusercontent.com/nvhoc/gitlab-jobs/master/.gitlab-ci.docker.yml
-  - remote: https://raw.githubusercontent.com/nvhoc/gitlab-jobs/master/.gitlab-ci.ec2-deploy.yml
-```
+  - remote: https://github.com/nvhoc/gitlab-jobs/releases/download/v1.0.0/default.gitlab-ci.tag.yml
+  - remote: https://github.com/nvhoc/gitlab-jobs/releases/download/v1.0.0/default.gitlab-ci.docker.yml
+  - remote: https://github.com/nvhoc/gitlab-jobs/releases/download/v1.0.0/default.gitlab-ci.ec2-deploy.yml
 
+```
+3. define CI&CD variables:
+3.1. to include .gitlab-ci.tag.yml:
++ generate a pair of key ssh by ssh-keygen => private_key && public_key 
++ set SSH_PRIVATE_KEY=${private_key}  (text)
++ add public key in "Deploy Keys" at "CI&CD settings" 
++ set GITHUB_EMAIL=${your bot email}
++ set GITHUB_USER=${your username}
+
+3.2. to include .gitlab-ci.docker.yml:
++ set DOCKER_USER_NAME=${your bot username in your docker registry}
++ set DOCKER_PASSWORD=${your bot password in your docker registry}
+
+3.3. to include .gitlab-ci.ec2-deploy.yml:
++ note: the file support for simple deployment with docker-compose. I will add new file for k8s later.
++ set EC2_PEM_KEY=${content of pem file}
++ set EC2_USER=${ec2 username}
++ set EC2_HOST=${ec2 public address}
++ set EC2_DEPLOY_PATH=${ec2 path store docker-compose deployment} find a example at ./example/docker-compose

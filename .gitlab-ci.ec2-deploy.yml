@@ -10,7 +10,7 @@ ec2-dockercompose:
     - chmod 700 ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - ssh -t $COHBOT_EC_USER@$COHBOT_EC_HOST "cd $COHBOT_DEPLOY_PATH && pwd && COHBOT_DEPLOY_IMAGE=$COHBOT_DEPLOY_IMAGE docker-compose up -d"
+    - ssh -t $EC2_USER@$EC2_HOST "cd $EC2_DEPLOY_PATH && pwd && IMAGE=$IMAGE docker-compose up -d"
   artifacts:
     paths:
     - .variables
