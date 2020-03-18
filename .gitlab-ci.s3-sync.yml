@@ -3,12 +3,15 @@ s3-sync:
   image: cohbot/aws-cli
   before_script:
     - BUILD_PATH=${BUILD_PATH:-"build"}
+    - echo $BUILD_PATH
   script:
     - echo "syncing file to bucket ... $S3_DEPLOY_BUCKET"
     - aws s3 sync $BUILD_PATH s3://$S3_DEPLOY_BUCKET
   artifacts:
     paths:
-    - $BUILD_PATH
+    - build
+    - www
+    - dist
   only:
     - master
 

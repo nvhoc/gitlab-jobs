@@ -3,13 +3,16 @@ yarn-build:
   image: node:alpine
   before_script:
     - BUILD_PATH=${BUILD_PATH:-"build"}
+    - echo $BUILD_PATH
   script:
     - yarn
     - yarn build
     - ls $BUILD_PATH
   artifacts:
     paths:
-    - $BUILD_PATH
+    - build
+    - www
+    - dist
   only:
     - master
 
