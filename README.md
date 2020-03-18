@@ -50,3 +50,5 @@ include:
 3.5. to include .gitlab-ci.s3-sync.yml:
 + set BUILD_PATH=${path of folder that you want to sync to s3}
 + set S3_DEPLOY_BUCKET=${s3 bucket}
++ set AWS_ACCESS_KEY_ID=${aws access key}
++ set AWS_SECRET_ACCESS_KEY=${aws secret key}
