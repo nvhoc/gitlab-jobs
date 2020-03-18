@@ -25,6 +25,7 @@ include:
 
 ```
 3. define CI&CD variables:
+
 3.1. to include .gitlab-ci.tag.yml:
 + generate a pair of key ssh by ssh-keygen => private_key && public_key 
 + set SSH_PRIVATE_KEY=${private_key}  (text)
@@ -42,3 +43,10 @@ include:
 + set EC2_USER=${ec2 username}
 + set EC2_HOST=${ec2 public address}
 + set EC2_DEPLOY_PATH=${ec2 path store docker-compose deployment} find a example at ./example/docker-compose
+
+3.4. to include .gitlab-ci.yarn-build.yml:
++ set BUILD_PATH=${path of folder from building process}
+
+3.5. to include .gitlab-ci.s3-sync.yml:
++ set BUILD_PATH=${path of folder that you want to sync to s3}
++ set S3_DEPLOY_BUCKET=${s3 bucket}

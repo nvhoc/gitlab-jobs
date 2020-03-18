@@ -1,0 +1,17 @@
+yarn-build:
+  stage: build
+  image: node:alpine
+  before_script:
+    - BUILD_PATH=${BUILD_PATH:-"build"}
+  script:
+    - yarn
+    - yarn build
+    - ls $BUILD_PATH
+  artifacts:
+    paths:
+    - $BUILD_PATH
+  only:
+    - master
+
+
+
