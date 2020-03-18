@@ -1,4 +1,4 @@
-yarn-build:
+s3-sync:
   stage: build
   image: cohbot/aws-cli
   before_script:
