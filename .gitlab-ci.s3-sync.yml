@@ -1,5 +1,5 @@
 s3-sync:
-  stage: build
+  stage: deploy
   image: cohbot/aws-cli
   before_script:
     - BUILD_PATH=${BUILD_PATH:-"build"}
