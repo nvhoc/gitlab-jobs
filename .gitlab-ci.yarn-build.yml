@@ -1,6 +1,6 @@
 yarn-build:
   stage: build
-  image: node:alpine
+  image: node:lts-alpine
   before_script:
     - BUILD_PATH=${BUILD_PATH:-"build"}
     - echo $BUILD_PATH
