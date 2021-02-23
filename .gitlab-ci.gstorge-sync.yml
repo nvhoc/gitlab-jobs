@@ -1,0 +1,22 @@
+s3-sync:
+  stage: deploy
+  image: google/cloud-sdk:alpine
+  before_script:
+    - BUILD_PATH=${BUILD_PATH:-"build"}
+    - echo "BUILD_PATH $BUILD_PATH"
+    - ls $BUILD_PATH || echo "you should add $BUILD_PATH in artifacts" && exit 1
+    - echo $GC_AUTH_JSON auth.json
+    - gcloud auth activate-service-account --key-file=auth.json
+  script:
+    - echo "syncing file to bucket ... $GS_DEPLOY_BUCKET"
+    - gsutil rsync -r $BUILD_PATH gs://$GS_DEPLOY_BUCKET
+  artifacts:
+    paths:
+    - build
+    - www
+    - dist
+  only:
+    - master
+
+
+
