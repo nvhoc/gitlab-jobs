@@ -1,0 +1,21 @@
+yarn-build:
+  stage: build
+  image: node:12-alpine3.10
+  before_script:
+    - BUILD_PATH=${BUILD_PATH:-"build"}
+    - echo $BUILD_PATH
+    - apk add --update --no-cache python3  && ln -sf python3 /usr/bin/python
+  script:
+    - yarn
+    - yarn build
+    - ls $BUILD_PATH
+  artifacts:
+    paths:
+    - build
+    - www
+    - dist
+  only:
+    - master
+
+
+

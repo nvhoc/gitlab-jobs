@@ -1,0 +1,21 @@
+ec2-dockercompose:
+  stage: deploy
+  image: alpine
+  before_script:
+    - source .variables
+    - which ssh-agent || ( apk add openssh-client --no-cache)
+    - eval $(ssh-agent -s)
+    - echo "$EC2_PEM_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - ssh -t $EC2_USER@$EC2_HOST "cd $EC2_DEPLOY_PATH && pwd && IMAGE=$IMAGE docker-compose up -d"
+  artifacts:
+    paths:
+    - .variables
+  only:
+    - master
+
+
+
